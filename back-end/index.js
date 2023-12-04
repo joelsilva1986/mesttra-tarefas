@@ -38,7 +38,6 @@ const tarefas = [
   }
 ]
 
-
 // REST - POST / GET / PUT / DELETE
 // CRUD - CREATE / READ / UPDATE / DELETE
 app.get('/', (req, res) => {

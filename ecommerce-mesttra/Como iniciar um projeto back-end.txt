@@ -1,0 +1,39 @@
+Para iniciar um projeto back-end, certifique-se que você já tenha o NodeJS instalado em sua máquina, caso não tenha, faça as instalações necessárias antes de iniciar essa etapa. 
+
+    * Dentro da pasta raiz do projeto, crie uma pasta "back-end";
+    * Abra o terminal integrado nessa pasta clicando com o botão direito em cima da pasta e clicando em "Open in integrated terminal;
+    * Para inicializar um projeto npm, dê um comando "npm init -y";
+    * Instale o express "npm install express";
+    * Cadastrar um script de execução "dev" em package.json "node --watch --no-warnings index.js";
+    
+    * Crie um arquivo "index.js" dentro da pasta back-end;
+    * importe o express "const express = require('express');
+    * inicialize o express "const app = express()";
+    * configure a porta do projeto:
+        const port = 3000;
+        app.listen(port, () => {
+            console.log(`Servidor rodando na porta ${port}`);
+        })
+
+    * Configurar a minha primeira rota (boas vindas) utilizando o método "get" que aceita 2 parâmetros:
+    1 - O caminho da requisição;
+    2 - Uma função de callback onde recebe o "req" e o "res";
+        app.get('/', (req, res) =>{
+            res.send('Olá galera');
+        })
+
+    * Agora criaremos uma pasta dentro da pasta back-end chamada "routes" para gerenciar todas as nossas rotas que serão criadas no projeto;
+    * Dentro de "routes", crie um arquivo chamado "routes.js";
+    * importe o express dentro desse arquivo:
+        const express = require('express');
+    * Agora criaremos um roteador de rotas, que irá inicializar tods as rotas do express:
+        const router = express.Router();
+
+    * Agora podemos criar nosso array de produtos;
+    * Agora criaremos nossa rota do tipo "get" para listar todos os produtos;
+    * Agora para usar as rotas dentro do arquivo "index.js", devemos exportar nossas rotas, e para isso faremos:
+        module.exports = router;
+    * Agora importaremos essas rotas dentro de "index.js" que vai inicializar a rota /products de acordo com as configurações do meu arquivo de rotas:
+        const productRouter = require('./routes/routes');
+
+

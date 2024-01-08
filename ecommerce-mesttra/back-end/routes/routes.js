@@ -18,13 +18,24 @@ router.get('/', async(req,res) => {
 */
 //Metodo de desestruturação.
 router.get('/', async(req,res) => {
-    const { rows } = await pool.query('SELECT * FROM products');
-    res.send(rows)
+    try {
+        const { rows } = await pool.query('SELECT * FROM products');
+        res.send(rows)
+    }catch (error) {
+        console.error('Erro ao buscar o produto', error);
+        res.status(500).json({
+            message: 'Erro durante a busca',
+            data: error
+        })
+    }  
 })
+
+
 //[GET] - Rota que retorna um produto por id
 router.get('/:id', async(req,res) => {
     // recebe o id via req params
     const id = req.params.id;
+    
    
     const { rows } = await pool.query('SELECT * FROM products WHERE id =$1', [id]);
    

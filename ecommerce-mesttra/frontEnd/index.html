@@ -4,18 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-commerce Mesttra</title>
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body>
-    <section>
+<body class="bg-gray-100 p-8">
+
+    <!-- Formulário -->
+    <section class="max-w-md mx-auto bg-white rounded p-6 shadow-md sm:p-8 md:p-10 lg:p-12 xl:p-16 mb-8">
         <form id="myForm" onsubmit="submitForm(event)">
-            <input type="text" name="name" id="name" placeholder="Digite o nome do produto">
-            <input type="text" name="category" id="category" placeholder="Digite a categoria do produto">
-            <input type="text" name="price" id="price" placeholder="Digite o preço do produto">
-            <button type="submit">Cadastrar</button>
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Cadastrar um novo Produto</h2>
+            </div>
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-600">Nome do Produto</label>
+                <input type="text" name="name" id="name" placeholder="Digite o nome do produto" class="mt-1 p-2 border rounded w-full">
+            </div>
+
+            <div class="mb-4">
+                <label for="category" class="block text-sm font-medium text-gray-600">Categoria do Produto</label>
+                <input type="text" name="category" id="category" placeholder="Digite a categoria do produto" class="mt-1 p-2 border rounded w-full">
+            </div>
+
+            <div class="mb-4">
+                <label for="price" class="block text-sm font-medium text-gray-600">Preço do Produto</label>
+                <input type="text" name="price" id="price" placeholder="Digite o preço do produto" class="mt-1 p-2 border rounded w-full">
+            </div>
+
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Cadastrar</button>
         </form>
-        <ul id="lista"></ul>
     </section>
+
+    <!-- Lista Responsiva com Cards -->
+   
+    <ul id="lista" id="lista" class="flex flex-wrap list-none"></ul>
+
     <script src="./script.js"></script>
+
+    <!-- Modal para a edição de produtos -->
+    <div id="editModal" class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 hidden">
+        <div id="editModal" class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="bg-white w-96 p-6 rounded-md">
+                    <span class="absolute top-2 right-2 text-lg cursor-pointer" onclick="closeModal">&times;</span>
+                    <h2 class="text-2xl font-bold mb-4">Editar Produto</h2>
+                    <form id="editForm">
+                        <div class="mb-4">
+                            <label for="editName" class="block text-sm font-semibold text-gray-600 mb-1">Nome do Produto:</label>
+                            <input type="text" id="editName" placeholder="Novo nome" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" required>
+                        </div>
+        
+                        <div class="mb-4">
+                            <label for="editCategory" class="block text-sm font-semibold text-gray-600 mb-1">Categoria do Produto:</label>
+                            <input type="text" id="editCategory" placeholder="Nova categoria" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" required>
+                        </div>
+        
+                        <div class="mb-4">
+                            <label for="editPrice" class="block text-sm font-semibold text-gray-600 mb-1">Preço do Produto:</label>
+                            <input type="text" id="editPrice" placeholder="Novo preço" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" required>
+                        </div>
+        
+                        <div class="flex justify-end">
+                            <button type="button" id="saveEditButton" onclick="saveEdit()" class="px-4 py-2 bg-blue-500 text-white rounded focus:outline-none hover:bg-blue-600">Salvar</button>
+                            <button type="button" onclick="cancelEdit()" class="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded focus:outline-none hover:bg-gray-400">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

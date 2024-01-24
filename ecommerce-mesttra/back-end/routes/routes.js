@@ -43,7 +43,7 @@ router.get('/:id', async(req,res) => {
     if(rows.length === 0) {
         res.status(404).send('Produto não encontrado');
     }
-    res.send(rows)
+    res.send(rows);
 })
 
 // CRUD (CREATE - POST) (READ - GET) (UPDATE - PUT) (DELETE - DELETE)

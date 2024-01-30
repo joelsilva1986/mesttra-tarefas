@@ -1,10 +1,13 @@
 const express = require('express');
 const crypto = require('crypto');
+const cors = require('cors');
+const bcrypt = require('bcrypt');
 //importo do dbConfig
 const pool = require('./../dbConfig');
 
-
 const router = express.Router();
+
+router.use(cors());
 
 const products = []
 
@@ -16,6 +19,62 @@ router.get('/', async(req,res) => {
     res.send(productsDB)
 })
 */
+
+
+//Rota de Cadastro de usuário
+router.post('/register', async(req, res) => {
+    const {username, email, password} = req.body;
+
+    try {
+         // Verifica se o usuário já existe no banco de dados
+        const existingUser = await pool.query('SELECT * FROM users WHERE username = $1 OR email = $2', [username, email]);
+        if(existingUser.rows.lenght > 0) {
+            return res.status(400).send('Usuário já cadastrado.');
+        }
+
+        // Criptografa a senha antes de armazená-la no banco de dados
+        const hashedPassword = await bcrypt.hash(password, 10)
+
+        // Insere o novo usuário no banco de dados
+        const newUser = await pool.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *', [username, email, hashedPassword]);
+        res.status(201).json({ message: 'Usuário cadastrado com sucesso.', userId: newUser.rows[0].id });
+    }catch (error) {
+        console.error('Erro ao cadastrar usuário', error);
+        res.status(500).send('Erro ao cadastrar usuário');
+    }
+});
+
+// Rota de login
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        console.log('Tentativa de login para o usuário:', username);
+
+        const user = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+        
+        if (user.rows.length === 0) {
+            console.log('Usuário não encontrado:', username);
+            return res.status(401).json({ message: 'Credenciais inválidas' });
+        }
+
+        const hashedPassword = user.rows[0].password;
+        const passwordMatch = await bcrypt.compare(password, hashedPassword);
+
+        if (!passwordMatch) {
+            console.log('Senha incorreta para o usuário:', username);
+            return res.status(401).json({ message: 'Credenciais inválidas' });
+        }
+
+        console.log('Login bem-sucedido para o usuário:', username);
+        return res.status(200).json({ message: 'Login bem-sucedido' });
+
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        return res.status(500).json({ message: 'Erro ao fazer login. Por favor, tente novamente.' });
+    }
+});
+
 //Metodo de desestruturação.
 router.get('/', async(req,res) => {
     try {

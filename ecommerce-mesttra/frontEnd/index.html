@@ -8,8 +8,99 @@
 </head>
 <body class="bg-gray-100 p-8">
 
-    <!-- Formulário -->
-    <section class="max-w-md mx-auto bg-white rounded p-6 shadow-md sm:p-8 md:p-10 lg:p-12 xl:p-16 mb-8">
+    <div class="container mx-auto max-w-md">
+        <div id="loginContainer" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-2xl font-bold mb-4">Login Ecommerce-Mesttra</h2>
+            <form id="loginForm" class="space-y-4" onsubmit="submitLoginForm(event)">
+                <div class="mb-4">
+                    <label 
+                        for="username" 
+                        class="block text-gray-700 font-bold mb-2"
+                    >Username:
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        required
+                        class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        placeholder="Digite seu usuário"
+                        >
+                </div>
+                <div class="mb-4">
+                    <label 
+                        for="password" 
+                        class="block text-gray-700 font-bold mb-2"
+                    >Password:
+                    </label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        required
+                        class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        placeholder="Digite sua senha"
+                        >
+                </div>
+                <button type="submit"
+                        class="w-full px-4 py-2 bg-blue-500 text-white font-bold rounded focus:outline-none focus:shadow-outline hover:bg-blue-600">
+                    Login
+                </button>
+                <h3 id="registerLink" class="text-blue-500 cursor-pointer">Ainda não é cadastrado? Clique aqui para se cadastrar.</h3>
+            </form>
+        </div>
+    
+        <!-- Tela de Cadastro de usuário-->
+        <div id="userRegistration" class="max-w-md mx-auto bg-white rounded p-6 shadow-md" style="display: none;">
+            <h1 class="text-2xl font-bold mb-4">Cadastro de Usuário</h1>
+            <form id="registerForm">
+                <div class="mb-4">
+                    <label 
+                        for="username" 
+                        class="block text-gray-700 font-bold mb-2">Username:</label>
+                    <input type="text" 
+                        id="username" 
+                        name="username" 
+                        required class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        placeholder="Digite seu nome de usuário"
+                        >
+                </div>
+                <div class="mb-4">
+                    <label 
+                        for="email" 
+                        class="block text-gray-700 font-bold mb-2" 
+                    >Email:
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        required class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        placeholder="Digite seu email"
+                    >
+                </div>
+                <div class="mb-6">
+                    <label 
+                        for="password" 
+                        class="block text-gray-700 font-bold mb-2" 
+                    >Password:
+                    </label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        required class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        placeholder="Digite sua senha"
+                        >
+                </div>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+    
+    
+    <!-- Formulário de Cadastro de Produto -->
+    <section id="productRegistration" class="max-w-md mx-auto bg-white rounded p-6 shadow-md sm:p-8 md:p-10 lg:p-12 xl:p-16 mb-8" style="display: none;">
         <form id="myForm" onsubmit="submitForm(event)">
             <div>
                 <h2 class="text-2xl font-bold mb-4">Cadastrar um novo Produto</h2>
@@ -18,30 +109,24 @@
                 <label for="name" class="block text-sm font-medium text-gray-600">Nome do Produto</label>
                 <input type="text" name="name" id="name" placeholder="Digite o nome do produto" class="mt-1 p-2 border rounded w-full">
             </div>
-
             <div class="mb-4">
                 <label for="category" class="block text-sm font-medium text-gray-600">Categoria do Produto</label>
                 <input type="text" name="category" id="category" placeholder="Digite a categoria do produto" class="mt-1 p-2 border rounded w-full">
             </div>
-
             <div class="mb-4">
                 <label for="price" class="block text-sm font-medium text-gray-600">Preço do Produto</label>
                 <input type="text" name="price" id="price" placeholder="Digite o preço do produto" class="mt-1 p-2 border rounded w-full">
             </div>
-
             <button type="submit" class="bg-blue-500 text-white p-2 rounded">Cadastrar</button>
         </form>
     </section>
-
+    
     <!-- Lista Responsiva com Cards -->
-   
-    <ul id="lista" id="lista" class="flex flex-wrap list-none"></ul>
-
-    <script src="./script.js"></script>
-
+    <ul id="lista" class="flex flex-wrap list-none"></ul>
+    
     <!-- Modal para a edição de produtos -->
     <div id="editModal" class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 hidden">
-        <div id="editModal" class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50">
+        <div class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50">
             <div class="flex items-center justify-center min-h-screen">
                 <div class="bg-white w-96 p-6 rounded-md">
                     <span class="absolute top-2 right-2 text-lg cursor-pointer" onclick="closeModal">&times;</span>
@@ -51,17 +136,14 @@
                             <label for="editName" class="block text-sm font-semibold text-gray-600 mb-1">Nome do Produto:</label>
                             <input type="text" id="editName" placeholder="Novo nome" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" required>
                         </div>
-        
                         <div class="mb-4">
                             <label for="editCategory" class="block text-sm font-semibold text-gray-600 mb-1">Categoria do Produto:</label>
                             <input type="text" id="editCategory" placeholder="Nova categoria" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" required>
                         </div>
-        
                         <div class="mb-4">
                             <label for="editPrice" class="block text-sm font-semibold text-gray-600 mb-1">Preço do Produto:</label>
                             <input type="text" id="editPrice" placeholder="Novo preço" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" required>
                         </div>
-        
                         <div class="flex justify-end">
                             <button type="button" id="saveEditButton" onclick="saveEdit()" class="px-4 py-2 bg-blue-500 text-white rounded focus:outline-none hover:bg-blue-600">Salvar</button>
                             <button type="button" onclick="cancelEdit()" class="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded focus:outline-none hover:bg-gray-400">Cancelar</button>
@@ -72,5 +154,6 @@
         </div>
     </div>
 
+    <script src="./script.js"></script>
 </body>
 </html>

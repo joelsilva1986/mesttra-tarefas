@@ -1,13 +1,123 @@
-// buscar o elemento lista que vai listar meus produtos
 const lista = document.querySelector('#lista');
 
 // URL da API
 const apiURL = 'http://localhost:3000/products';
 
+document.addEventListener('DOMContentLoaded', function() {
+    const userRegistration = document.getElementById('userRegistration');
+    const registerLink = document.getElementById('registerLink');
+    const loginContainer = document.getElementById('loginContainer');
+
+    // Adiciona o evento de clique no link de cadastro
+    registerLink.addEventListener('click', function() {
+        // Oculta o container que inclui o título e o formulário de login
+        loginContainer.style.display = 'none';
+        // Exibe somente o formulário de cadastro
+        userRegistration.style.display = 'block';
+    });
+});
+
+const registerForm = document.getElementById('registerForm');
+if(registerForm) {
+    registerForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+    
+        const username = registerForm.elements.username.value;
+        const email = registerForm.elements.email.value;
+        const password = registerForm.elements.password.value;
+    
+        try {
+            const response = await fetch(`${apiURL}/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, email, password })
+            });
+    
+            if (response.ok) {
+                alert('Cadastro realizado com sucesso.');
+                registerForm.elements.username.value = '';
+                registerForm.elements.email.value = '';
+                registerForm.elements.password.value = '';
+                
+                // Ocultar o formulário de cadastro
+                userRegistration.style.display = 'none';
+                // Exibir o formulário de login
+                loginContainer.style.display = 'block';
+            } else {
+                const data = await response.text();
+                alert(data);
+                registerForm.elements.username.value = '';
+                registerForm.elements.email.value = '';
+                registerForm.elements.password.value = '';
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar usuário:', error);
+            alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
+        }
+    });
+}else {
+    console.error('Elemento com ID registerForm não encontrado.');
+}
+
+
+// Função para lidar com o envio do formulário de login
+const submitLoginForm = async (event) => {
+    event.preventDefault(); // Impede o comportamento padrão de envio do formulário
+
+    // Obtém os valores dos campos de entrada
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    try {
+        // Envia a solicitação de login para a API
+        const response = await fetch(`${apiURL}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        // Obtém a resposta da API
+        const data = await response.json();
+        console.log(data)
+
+        if (response.ok) {
+            // Exibe mensagem de sucesso se o login for bem-sucedido
+            alert(data.message);
+            // Redireciona para a página de produtos após o login ser bem-sucedido
+           document.getElementById('username').value = '';
+           document.getElementById('password').value = '';
+            // Chama a função para obter os 
+            loginContainer.style.display = 'none';
+            productRegistration.style.display = 'block';
+            getProducts();
+        } else {
+            // Exibe mensagem de erro se o login falhar
+            alert(data.message);
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+        
+    } catch (error) {
+        // Exibe mensagem de erro se ocorrer um erro na solicitação
+        console.error('Erro ao fazer login:', error);
+        alert('Erro ao fazer login. Por favor, tente novamente.');
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+    }
+};
+
 // Busco os meus inputs para pegar o que o usuário digitou;
 const nameInput = document.querySelector('#name');
 const categoryInput = document.querySelector('#category');
 const priceInput = document.querySelector('#price');
+
+//Cadastrar novo usuário
+
+//Fazer login e senha antes de acessar a página do e-commerce
 
 const getProducts = async () => {
     lista.innerHTML = '';
@@ -23,7 +133,7 @@ const getProducts = async () => {
                 <p class="text-gray-800 font-bold">Preço: R$ ${product.price}</p>
                 <div class="flex justify-between mt-2">
                     <button onclick="editProduct('${product.id}')" data-id="${product.id}" class="bg-green-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Editar</button>
-                    <button onclick="deleteProduct('${product.id}')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Excluir</button>
+                    <button onclick="deleteProduct('${product.id}', '${product.name}')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Excluir</button>
                 </div>
                 <div id="editForm_${product.id}" style="display: none;">
                     <input type="text" id="editName_${product.id}" placeholder="Novo nome" />${product.id}
@@ -93,7 +203,7 @@ function cancelEdit() {
 async function saveEdit() {
     const editName = document.getElementById('editName').value;
     const editCategory = document.getElementById('editCategory').value;
-    const editPrice = document.getElementById('editPrice').value;
+    const editPrice = parseFloat(document.getElementById('editPrice').value).toFixed(2);
 
     const productId = document.getElementById('saveEditButton').dataset.productId;
 
@@ -123,9 +233,10 @@ async function saveEdit() {
 }
 
 // Função para deletar o produto
-async function deleteProduct(id) {
+async function deleteProduct(id, productName) {
     // Confirmar se o usuário realmente deseja excluir o produto
-    const confirmDelete = confirm('Tem certeza que deseja excluir este produto?');
+   
+    const confirmDelete = confirm(`Tem certeza que deseja excluir ${productName} da sua lista de produtos?`);
 
     if (confirmDelete) {
         // Enviar uma solicitação DELETE para a API
@@ -153,7 +264,7 @@ const submitForm = async (event) => {
     const product = {
         name: nameInput.value,
         category: categoryInput.value,
-        price: priceInput.value,
+        price: parseFloat(priceInput.value).toFixed(2),
     };
 
     // Enviar para o backend com requisição de post
@@ -170,7 +281,12 @@ const submitForm = async (event) => {
     console.log(data);
 
     alert(`Produto ${data.data[0].name} cadastrado!`);
+
+    nameInput.value = '';
+    categoryInput.value = '';
+    priceInput.value = '';
+
     getProducts();
 };
 
-getProducts();
+//getProducts();

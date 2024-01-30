@@ -93,6 +93,7 @@ const submitLoginForm = async (event) => {
             // Chama a função para obter os 
             loginContainer.style.display = 'none';
             productRegistration.style.display = 'block';
+            logoutContainer.style.display = 'block';
             getProducts();
         } else {
             // Exibe mensagem de erro se o login falhar
@@ -110,12 +111,25 @@ const submitLoginForm = async (event) => {
     }
 };
 
+function logout() {
+
+    const confirmLogout = confirm("Deseja mesmo sair?")
+    
+    if(confirmLogout) {
+        loginContainer.style.display = 'block';
+        productRegistration.style.display = 'none';
+        logoutContainer.style.display = 'none';
+        lista.innerHTML = '';
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    // Mostrar o logoutContainer quando o conteúdo for carregado
+document.getElementById('logoutContainer').style.display = 'block';
+});
 // Busco os meus inputs para pegar o que o usuário digitou;
 const nameInput = document.querySelector('#name');
 const categoryInput = document.querySelector('#category');
 const priceInput = document.querySelector('#price');
-
-//Cadastrar novo usuário
 
 //Fazer login e senha antes de acessar a página do e-commerce
 

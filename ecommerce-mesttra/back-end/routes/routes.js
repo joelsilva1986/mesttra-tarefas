@@ -55,7 +55,7 @@ router.post('/login', async (req, res) => {
         
         if (user.rows.length === 0) {
             console.log('Usuário não encontrado:', username);
-            return res.status(401).json({ message: 'Credenciais inválidas' });
+            return res.status(401).json({ message: 'Usuário não cadastrado no sistema.' });
         }
 
         const hashedPassword = user.rows[0].password;
@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
 
         if (!passwordMatch) {
             console.log('Senha incorreta para o usuário:', username);
-            return res.status(401).json({ message: 'Credenciais inválidas' });
+            return res.status(401).json({ message: 'Senha incorreta' });
         }
 
         console.log('Login bem-sucedido para o usuário:', username);

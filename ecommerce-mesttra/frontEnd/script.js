@@ -25,40 +25,56 @@ if(registerForm) {
         const username = registerForm.elements.username.value;
         const email = registerForm.elements.email.value;
         const password = registerForm.elements.password.value;
-    
-        try {
-            const response = await fetch(`${apiURL}/register`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, email, password })
-            });
-    
-            if (response.ok) {
-                alert('Cadastro realizado com sucesso.');
-                registerForm.elements.username.value = '';
-                registerForm.elements.email.value = '';
-                registerForm.elements.password.value = '';
-                
-                // Ocultar o formulário de cadastro
-                userRegistration.style.display = 'none';
-                // Exibir o formulário de login
-                loginContainer.style.display = 'block';
-            } else {
-                const data = await response.text();
-                alert(data);
-                registerForm.elements.username.value = '';
-                registerForm.elements.email.value = '';
-                registerForm.elements.password.value = '';
+        const passwordConfirmation = registerForm.elements.passwordVerification.value;
+
+        if(passwordConfirmation === password) {
+            try {
+                const response = await fetch(`${apiURL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password })
+                });
+        
+                if (response.ok) {
+                    alert('Cadastro realizado com sucesso.');
+                    registerForm.elements.username.value = '';
+                    registerForm.elements.email.value = '';
+                    registerForm.elements.password.value = '';
+                    registerForm.elements.passwordVerification.value = '';
+                    
+                    // Ocultar o formulário de cadastro
+                    userRegistration.style.display = 'none';
+                    // Exibir o formulário de login
+                    loginContainer.style.display = 'block';
+                } else {
+                    const data = await response.text();
+                    alert(data);
+                    registerForm.elements.username.value = '';
+                    registerForm.elements.email.value = '';
+                    registerForm.elements.password.value = '';
+                }
+            } catch (error) {
+                console.error('Erro ao cadastrar usuário:', error);
+                alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
             }
-        } catch (error) {
-            console.error('Erro ao cadastrar usuário:', error);
-            alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
-        }
+            }else {
+                alert('As senhas não coincidem')
+            }
     });
 }else {
     console.error('Elemento com ID registerForm não encontrado.');
+}
+
+function cancelRegister() {
+    registerForm.elements.username.value = '';
+    registerForm.elements.email.value = '';
+    registerForm.elements.password.value = '';
+    registerForm.elements.passwordVerification.value = '';
+
+    userRegistration.style.display = 'none';
+    loginContainer.style.display = 'block';
 }
 
 
@@ -92,7 +108,7 @@ const submitLoginForm = async (event) => {
            document.getElementById('password').value = '';
             // Chama a função para obter os 
             loginContainer.style.display = 'none';
-            productRegistration.style.display = 'block';
+            //productRegistration.style.display = 'block';
             logoutContainer.style.display = 'block';
             getProducts();
         } else {
@@ -124,7 +140,7 @@ function logout() {
 }
 document.addEventListener('DOMContentLoaded', function() {
     // Mostrar o logoutContainer quando o conteúdo for carregado
-document.getElementById('logoutContainer').style.display = 'block';
+document.getElementById('logoutContainer').style.display = 'none';
 });
 // Busco os meus inputs para pegar o que o usuário digitou;
 const nameInput = document.querySelector('#name');

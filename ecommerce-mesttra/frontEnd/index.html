@@ -8,6 +8,12 @@
 </head>
 <body class="bg-gray-100 p-8">
 
+    <header class="flex justify-end">
+        <div id="logoutContainer" style="display:none" >
+            <button onclick="logout()" class="bg-red-500 text-white p-2 rounded">Logout</button>
+        </div>
+    </header>
+    
     <div class="container mx-auto max-w-md">
         <div id="loginContainer" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h2 class="text-2xl font-bold mb-4">Login Ecommerce-Mesttra</h2>
@@ -91,33 +97,72 @@
                         name="password" 
                         required class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                         placeholder="Digite sua senha"
-                        >
+                    >
+                    <div style="margin-bottom: 10px;"></div>
+                    <input 
+                        type="password" 
+                        id="passwordVerification" 
+                        name="passwordVerification" 
+                        required class="w-full px-3 py-2 leading-tight border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        placeholder="Digite novamente sua senha"
+                    >
                 </div>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cadastrar</button>
+                <button 
+                    type="submit" 
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                Cadastrar
+                </button>
+                <button 
+                    type="button" 
+                    onclick="cancelRegister()" 
+                    class="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded focus:outline-none hover:bg-gray-400"
+                >
+                Cancelar
+                </button>
             </form>
         </div>
     </div>
     
-    <div id="logoutContainer" style="display:none" class="flex justify-end">
-        <button onclick="logout()" class="bg-red-500 text-white p-2 rounded">Logout</button>
-    </div>
     <!-- Formulário de Cadastro de Produto -->
-    <section id="productRegistration" class="max-w-md mx-auto bg-white rounded p-6 shadow-md sm:p-8 md:p-10 lg:p-12 xl:p-16 mb-8" style="display: none;">
+    <section 
+        id="productRegistration" 
+        class="max-w-md mx-auto bg-white rounded p-6 shadow-md sm:p-8 md:p-10 lg:p-12 xl:p-16 mb-8" 
+        style="display: none;"
+        >
         <form id="myForm" onsubmit="submitForm(event)">
             <div>
                 <h2 class="text-2xl font-bold mb-4">Cadastrar um novo Produto</h2>
             </div>
             <div class="mb-4">
                 <label for="name" class="block text-sm font-medium text-gray-600">Nome do Produto</label>
-                <input type="text" name="name" id="name" placeholder="Digite o nome do produto" class="mt-1 p-2 border rounded w-full">
+                <input 
+                    type="text" 
+                    name="name" 
+                    id="name" 
+                    placeholder="Digite o nome do produto" 
+                    class="mt-1 p-2 border rounded w-full"
+                >
             </div>
             <div class="mb-4">
                 <label for="category" class="block text-sm font-medium text-gray-600">Categoria do Produto</label>
-                <input type="text" name="category" id="category" placeholder="Digite a categoria do produto" class="mt-1 p-2 border rounded w-full">
+                <input 
+                    type="text" 
+                    name="category" 
+                    id="category" 
+                    placeholder="Digite a categoria do produto" 
+                    class="mt-1 p-2 border rounded w-full"
+                >
             </div>
             <div class="mb-4">
                 <label for="price" class="block text-sm font-medium text-gray-600">Preço do Produto</label>
-                <input type="text" name="price" id="price" placeholder="Digite o preço do produto" class="mt-1 p-2 border rounded w-full">
+                <input 
+                    type="text" 
+                    name="price" 
+                    id="price" 
+                    placeholder="Digite o preço do produto" 
+                    class="mt-1 p-2 border rounded w-full"
+                >
             </div>
             <button type="submit" class="bg-blue-500 text-white p-2 rounded">Cadastrar</button>
         </form>
@@ -136,19 +181,49 @@
                     <form id="editForm">
                         <div class="mb-4">
                             <label for="editName" class="block text-sm font-semibold text-gray-600 mb-1">Nome do Produto:</label>
-                            <input type="text" id="editName" placeholder="Novo nome" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" required>
+                            <input 
+                                type="text" 
+                                id="editName" 
+                                placeholder="Novo nome" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" 
+                                required
+                            >
                         </div>
                         <div class="mb-4">
                             <label for="editCategory" class="block text-sm font-semibold text-gray-600 mb-1">Categoria do Produto:</label>
-                            <input type="text" id="editCategory" placeholder="Nova categoria" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" required>
+                            <input 
+                                type="text" 
+                                id="editCategory" 
+                                placeholder="Nova categoria" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" 
+                                required
+                            >
                         </div>
                         <div class="mb-4">
                             <label for="editPrice" class="block text-sm font-semibold text-gray-600 mb-1">Preço do Produto:</label>
-                            <input type="text" id="editPrice" placeholder="Novo preço" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" required>
+                            <input 
+                                type="text" 
+                                id="editPrice" 
+                                placeholder="Novo preço" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" 
+                                required
+                            >
                         </div>
                         <div class="flex justify-end">
-                            <button type="button" id="saveEditButton" onclick="saveEdit()" class="px-4 py-2 bg-blue-500 text-white rounded focus:outline-none hover:bg-blue-600">Salvar</button>
-                            <button type="button" onclick="cancelEdit()" class="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded focus:outline-none hover:bg-gray-400">Cancelar</button>
+                            <button 
+                                type="button" 
+                                id="saveEditButton" 
+                                onclick="saveEdit()" 
+                                class="px-4 py-2 bg-blue-500 text-white rounded focus:outline-none hover:bg-blue-600"
+                            >
+                            Salvar
+                            </button>
+                            <button 
+                                type="button" 
+                                onclick="cancelEdit()" 
+                                class="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded focus:outline-none hover:bg-gray-400"
+                            >
+                            Cancelar
+                            </button>
                         </div>
                     </form>
                 </div>

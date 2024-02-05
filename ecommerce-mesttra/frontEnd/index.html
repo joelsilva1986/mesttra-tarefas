@@ -131,49 +131,52 @@
     </div>
     
     <!-- Formulário de Cadastro de Produto -->
-    <section 
-        id="productRegistration" 
-        class="max-w-md mx-auto bg-white rounded p-6 shadow-md sm:p-8 md:p-10 lg:p-12 xl:p-16 mb-8" 
-        style="display: none;"
-        >
-        <form id="myForm" onsubmit="submitForm(event)">
-            <div>
-                <h2 class="text-2xl font-bold mb-4">Cadastrar um novo Produto</h2>
+    <div id="editModalRegisterNewProduct" class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 hidden">
+        <div class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="bg-white w-96 p-6 rounded-md">
+                    <form id="myForm" onsubmit="submitForm(event)">
+                        <div>
+                            <h2 class="text-2xl font-bold mb-4">Cadastrar um novo Produto</h2>
+                        </div>
+                        <div class="mb-4">
+                            <label for="name" class="block text-sm font-medium text-gray-600">Nome do Produto</label>
+                            <input 
+                                type="text" 
+                                name="name" 
+                                id="name" 
+                                placeholder="Digite o nome do produto" 
+                                class="mt-1 p-2 border rounded w-full"
+                            >
+                        </div>
+                        <div class="mb-4">
+                            <label for="category" class="block text-sm font-medium text-gray-600">Categoria do Produto</label>
+                            <input 
+                                type="text" 
+                                name="category" 
+                                id="category" 
+                                placeholder="Digite a categoria do produto" 
+                                class="mt-1 p-2 border rounded w-full"
+                            >
+                        </div>
+                        <div class="mb-4">
+                            <label for="price" class="block text-sm font-medium text-gray-600">Preço do Produto</label>
+                            <input 
+                                type="text" 
+                                name="price" 
+                                id="price" 
+                                placeholder="Digite o preço do produto" 
+                                class="mt-1 p-2 border rounded w-full"
+                            >
+                        </div>
+                        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Cadastrar</button>
+                        <button onclick="cancelRegisterNewProduct()" class="bg-gray-500 text-white p-2 rounded">Cancelar</button>
+                    </form>
+    
+                </div>
             </div>
-            <div class="mb-4">
-                <label for="name" class="block text-sm font-medium text-gray-600">Nome do Produto</label>
-                <input 
-                    type="text" 
-                    name="name" 
-                    id="name" 
-                    placeholder="Digite o nome do produto" 
-                    class="mt-1 p-2 border rounded w-full"
-                >
-            </div>
-            <div class="mb-4">
-                <label for="category" class="block text-sm font-medium text-gray-600">Categoria do Produto</label>
-                <input 
-                    type="text" 
-                    name="category" 
-                    id="category" 
-                    placeholder="Digite a categoria do produto" 
-                    class="mt-1 p-2 border rounded w-full"
-                >
-            </div>
-            <div class="mb-4">
-                <label for="price" class="block text-sm font-medium text-gray-600">Preço do Produto</label>
-                <input 
-                    type="text" 
-                    name="price" 
-                    id="price" 
-                    placeholder="Digite o preço do produto" 
-                    class="mt-1 p-2 border rounded w-full"
-                >
-            </div>
-            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Cadastrar</button>
-            <button onclick="cancelRegisterNewProduct()" class="bg-gray-500 text-white p-2 rounded">Cancelar</button>
-        </form>
-    </section>
+        </div>
+    </div>
     
     <!-- Lista Responsiva com Cards -->
     <ul id="lista" class="flex flex-wrap list-none"></ul>

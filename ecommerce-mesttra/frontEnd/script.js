@@ -129,11 +129,11 @@ const submitLoginForm = async (event) => {
 };
 
 function registerNewProduct() {
-    productRegistration.style.display = 'block';
+    document.getElementById('editModalRegisterNewProduct').classList.remove('hidden');
 }
 
 function cancelRegisterNewProduct() {
-    productRegistration.style.display = 'none';
+    document.getElementById('editModalRegisterNewProduct').classList.add('hidden');
 }
 
 function logout() {
@@ -142,7 +142,7 @@ function logout() {
     
     if(confirmLogout) {
         loginContainer.style.display = 'block';
-        productRegistration.style.display = 'none';
+        newProduct.style.display = 'none';
         logoutContainer.style.display = 'none';
         lista.innerHTML = '';
     }
@@ -193,7 +193,7 @@ const editProduct = async (id)=> {
         // Fazer uma solicitação para obter os detalhes do produto com base no ID
         const response = await fetch(`${apiURL}/${id}`);
         const product = await response.json();
-        console.log(product)
+        
                 
         // Preencher os campos do modal com os dados do produto
         const modalEditName = document.getElementById('editName');
@@ -325,6 +325,7 @@ const submitForm = async (event) => {
     categoryInput.value = '';
     priceInput.value = '';
 
+    document.getElementById('editModalRegisterNewProduct').classList.add('hidden');
     getProducts();
 };
 

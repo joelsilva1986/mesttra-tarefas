@@ -83,8 +83,8 @@ const submitLoginForm = async (event) => {
     event.preventDefault(); // Impede o comportamento padrão de envio do formulário
 
     // Obtém os valores dos campos de entrada
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const username = document.getElementById('usernameLogin').value;
+    const password = document.getElementById('passwordLogin').value;
 
     try {
         // Envia a solicitação de login para a API
@@ -104,28 +104,37 @@ const submitLoginForm = async (event) => {
             // Exibe mensagem de sucesso se o login for bem-sucedido
             alert(data.message);
             // Redireciona para a página de produtos após o login ser bem-sucedido
-           document.getElementById('username').value = '';
-           document.getElementById('password').value = '';
+           document.getElementById('usernameLogin').value = '';
+           document.getElementById('passwordLogin').value = '';
             // Chama a função para obter os 
             loginContainer.style.display = 'none';
             //productRegistration.style.display = 'block';
             logoutContainer.style.display = 'block';
+            newProduct.style.display = 'block'
             getProducts();
         } else {
             // Exibe mensagem de erro se o login falhar
             alert(data.message);
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
+            document.getElementById('usernameLogin').value = '';
+            document.getElementById('passwordLogin').value = '';
         }
         
     } catch (error) {
         // Exibe mensagem de erro se ocorrer um erro na solicitação
         console.error('Erro ao fazer login:', error);
         alert('Erro ao fazer login. Por favor, tente novamente.');
-        document.getElementById('username').value = '';
-        document.getElementById('password').value = '';
+        document.getElementById('usernameLogin').value = '';
+        document.getElementById('passwordLogin').value = '';
     }
 };
+
+function registerNewProduct() {
+    productRegistration.style.display = 'block';
+}
+
+function cancelRegisterNewProduct() {
+    productRegistration.style.display = 'none';
+}
 
 function logout() {
 
@@ -177,6 +186,7 @@ const getProducts = async () => {
     });
 };
 
+
 // Função para abrir o modal de edição
 const editProduct = async (id)=> {
     try {
@@ -205,7 +215,6 @@ const editProduct = async (id)=> {
         console.error('Erro ao obter detalhes do produto para edição:', error);
     }
 }
-
 
 // Função para fechar o modal
 function closeModal() {
